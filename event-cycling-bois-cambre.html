@@ -1,0 +1,424 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Cycling Sunset au Bois de la Cambre — Tribu·M Bruxelles. Réservez votre place pour cet événement afterwork en plein air.">
+  <title>Cycling Sunset — Bois de la Cambre · Tribu·M</title>
+  <link rel="stylesheet" href="style.css">
+  <style>
+    .event-detail-hero {
+      height: 55vh;
+      min-height: 380px;
+      position: relative;
+      background-image: url('assets/cycling-bg.png');
+      background-size: cover;
+      background-position: center 35%;
+    }
+    .event-detail-hero::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to bottom, rgba(31,56,49,.15) 0%, rgba(31,56,49,.6) 100%);
+    }
+    .event-hero-content {
+      position: absolute;
+      bottom: 2.5rem;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 1;
+      width: 100%;
+      max-width: 1200px;
+      padding: 0 1.5rem;
+    }
+    .event-hero-content .event-tag-hero {
+      display: inline-block;
+      background: var(--terra);
+      color: var(--creme);
+      font-size: 0.68rem;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      padding: 0.35rem 0.9rem;
+      border-radius: 100px;
+      margin-bottom: 0.75rem;
+    }
+    .event-hero-content h1 {
+      color: var(--creme);
+      font-size: clamp(2rem, 5vw, 3rem);
+      text-shadow: 0 2px 16px rgba(31,56,49,.3);
+    }
+
+    /* MAIN LAYOUT */
+    .event-detail-main {
+      background: var(--creme);
+      padding: 4rem 0 6rem;
+    }
+    .event-detail-grid {
+      display: grid;
+      grid-template-columns: 1fr 380px;
+      gap: 4rem;
+      align-items: start;
+    }
+
+    /* LEFT — INFO */
+    .event-info h2 { font-size: 1.6rem; margin-bottom: 1rem; margin-top: 2rem; }
+    .event-info h2:first-child { margin-top: 0; }
+    .event-info p { margin-bottom: 1rem; }
+    .event-info ul {
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+      margin-bottom: 1.5rem;
+    }
+    .event-info li {
+      font-size: 0.92rem;
+      opacity: 0.82;
+      display: flex;
+      align-items: flex-start;
+      gap: 0.5rem;
+    }
+    .event-info li::before {
+      content: '—';
+      color: var(--terra);
+      font-weight: 700;
+      flex-shrink: 0;
+    }
+
+    .info-block {
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+      background: var(--sable);
+      border-radius: var(--radius-lg);
+      padding: 1.75rem;
+      margin-bottom: 2rem;
+    }
+    .info-row {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      font-size: 0.92rem;
+    }
+    .info-row .info-icon {
+      width: 36px; height: 36px;
+      background: var(--creme);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1rem;
+      flex-shrink: 0;
+    }
+    .info-row strong { font-weight: 700; display: block; font-size: 0.82rem; opacity: 0.55; text-transform: uppercase; letter-spacing: 0.08em; }
+    .info-row span   { font-size: 0.95rem; }
+
+    /* RIGHT — BOOKING PANEL */
+    .booking-panel {
+      position: sticky;
+      top: 90px;
+      background: var(--sable);
+      border-radius: var(--radius-lg);
+      padding: 2rem;
+      box-shadow: 0 8px 32px rgba(31,56,49,.1);
+    }
+    .booking-panel-header {
+      border-bottom: 1px solid rgba(31,56,49,.1);
+      padding-bottom: 1.5rem;
+      margin-bottom: 1.5rem;
+    }
+    .booking-panel-header h3 { font-size: 1.25rem; margin-bottom: 0.25rem; }
+    .booking-panel-header .panel-date { font-size: 0.85rem; opacity: 0.6; }
+
+    .booking-price {
+      font-family: var(--f-title);
+      font-size: 2.8rem;
+      font-weight: 700;
+      color: var(--foret);
+      line-height: 1;
+      margin-bottom: 0.3rem;
+    }
+    .booking-price span { font-family: var(--f-body); font-size: 0.88rem; font-weight: 400; opacity: 0.5; }
+
+    .spots-indicator {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-size: 0.82rem;
+      font-weight: 700;
+      color: var(--terra);
+      margin-bottom: 1.5rem;
+    }
+    .spots-bar {
+      height: 4px;
+      background: rgba(31,56,49,.1);
+      border-radius: 2px;
+      margin-bottom: 1.75rem;
+      overflow: hidden;
+    }
+    .spots-bar-fill {
+      height: 100%;
+      background: var(--terra);
+      border-radius: 2px;
+      transition: width 0.5s ease;
+    }
+
+    .booking-details {
+      display: flex;
+      flex-direction: column;
+      gap: 0.65rem;
+      margin-bottom: 1.75rem;
+    }
+    .booking-detail-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 0.88rem;
+    }
+    .booking-detail-row .label { opacity: 0.55; }
+    .booking-detail-row .value { font-weight: 700; }
+
+    .booking-cta {
+      display: block;
+      background: var(--terra);
+      color: var(--creme);
+      text-align: center;
+      padding: 1.1rem;
+      border-radius: var(--radius-lg);
+      font-family: var(--f-body);
+      font-size: 1rem;
+      font-weight: 700;
+      letter-spacing: 0.03em;
+      transition: background var(--ease), transform var(--ease);
+      margin-bottom: 0.75rem;
+    }
+    .booking-cta:hover { background: var(--miel); color: var(--foret); transform: translateY(-2px); }
+    .booking-note { font-size: 0.75rem; text-align: center; opacity: 0.45; }
+
+    @media (max-width: 900px) {
+      .event-detail-grid { grid-template-columns: 1fr; }
+      .booking-panel { position: static; margin-top: 2rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ======== NAVIGATION ======== -->
+  <nav class="navbar" id="navbar">
+    <div class="nav-inner">
+      <a href="index.html" class="nav-logo">
+        <img src="assets/masque-clean.png" alt="Tribu·M" class="nav-masque">
+        <span class="nav-brand">Tribu<span class="nav-m">·M</span></span>
+      </a>
+      <ul class="nav-links">
+        <li><a href="index.html">Accueil</a></li>
+        <li><a href="evenements.html" class="active">Événements</a></li>
+        <li><a href="team.html">L'équipe</a></li>
+        <li><a href="entreprises.html">Entreprises</a></li>
+      </ul>
+      <div class="nav-right">
+        <div class="lang-selector">
+          <button class="lang-btn active">FR</button>
+          <button class="lang-btn">NL</button>
+          <button class="lang-btn">EN</button>
+        </div>
+        <a href="#booking" class="btn-primary">Réserver</a>
+        <button class="hamburger" id="hamburger" aria-label="Ouvrir le menu" aria-expanded="false">
+          <span></span><span></span><span></span>
+        </button>
+      </div>
+    </div>
+    <div class="mobile-menu" id="mobile-menu" aria-hidden="true">
+      <ul>
+        <li><a href="index.html">Accueil</a></li>
+        <li><a href="evenements.html">Événements</a></li>
+        <li><a href="team.html">L'équipe</a></li>
+        <li><a href="entreprises.html">Entreprises</a></li>
+      </ul>
+      <div class="lang-selector mobile">
+        <button class="lang-btn active">FR</button>
+        <button class="lang-btn">NL</button>
+        <button class="lang-btn">EN</button>
+      </div>
+    </div>
+  </nav>
+
+  <!-- ======== HERO ======== -->
+  <div class="event-detail-hero">
+    <div class="event-hero-content">
+      <a href="evenements.html" style="color:rgba(255,246,232,.7);font-size:.82rem;display:inline-flex;align-items:center;gap:.4rem;margin-bottom:.75rem;transition:color .3s">
+        ← Tous les événements
+      </a>
+      <br>
+      <span class="event-tag-hero">Cycling</span>
+      <h1>Cycling Sunset<br>Bois de la Cambre</h1>
+    </div>
+  </div>
+
+  <!-- ======== MAIN CONTENT ======== -->
+  <div class="event-detail-main">
+    <div class="container">
+      <div class="event-detail-grid">
+
+        <!-- LEFT: INFO -->
+        <div class="event-info">
+
+          <div class="info-block">
+            <div class="info-row">
+              <div class="info-icon">📅</div>
+              <div><strong>Date</strong><span>Samedi 14 juin 2026</span></div>
+            </div>
+            <div class="info-row">
+              <div class="info-icon">🕐</div>
+              <div><strong>Horaire</strong><span>18h30 – 20h00 (accueil dès 18h15)</span></div>
+            </div>
+            <div class="info-row">
+              <div class="info-icon">📍</div>
+              <div><strong>Lieu</strong><span>Bois de la Cambre, Bruxelles — point de rendez-vous à confirmer à l'inscription</span></div>
+            </div>
+            <div class="info-row">
+              <div class="info-icon">👥</div>
+              <div><strong>Places</strong><span>25 places au total — 8 disponibles</span></div>
+            </div>
+          </div>
+
+          <h2>L'expérience</h2>
+          <p>Une session de cycling en plein air, face au lac du Bois de la Cambre, portée par une playlist soigneusement sélectionnée. Le soleil descend, la tribu pédale ensemble.</p>
+          <p>Pas de compétition, pas de chronomètre. Juste l'énergie collective, la musique live et la sensation unique de bouger au même rythme que les autres.</p>
+          <p>Après la session, un moment de récupération en groupe est prévu — l'occasion idéale pour souffler, se désaltérer et rencontrer les autres membres de la tribu.</p>
+
+          <h2>Ce qu'il faut apporter</h2>
+          <ul>
+            <li>Tenue de sport confortable (shorts ou legging)</li>
+            <li>Chaussures de sport fermées (baskets)</li>
+            <li>Bouteille d'eau</li>
+            <li>Une petite serviette</li>
+          </ul>
+          <p>Le vélo stationnaire est fourni et réglé à ta taille à l'arrivée. Aucun équipement spécifique de cycling requis.</p>
+
+          <h2>Niveau</h2>
+          <p>Accessible à tous les niveaux. La session est guidée par un·e instructeur·trice Tribu·M certifié·e, qui adapte l'intensité en temps réel. Tu vas à ton rythme — ce qui compte, c'est de bouger ensemble.</p>
+
+          <h2>Localisation</h2>
+          <p>Bois de la Cambre, Bruxelles. Le point de rendez-vous précis te sera communiqué par email après ta réservation. Parking disponible à proximité. Accessible en transports en commun (tram 7, bus 41).</p>
+
+        </div>
+
+        <!-- RIGHT: BOOKING PANEL -->
+        <div class="booking-panel" id="booking">
+          <div class="booking-panel-header">
+            <h3>Cycling Sunset</h3>
+            <p class="panel-date">Sam 14 juin 2026 · 18h30</p>
+          </div>
+
+          <div class="booking-price">25 € <span>/ personne</span></div>
+
+          <div class="spots-indicator">
+            <span>🟠</span> 8 places restantes
+          </div>
+          <div class="spots-bar">
+            <div class="spots-bar-fill" style="width: 68%"></div>
+          </div>
+
+          <div class="booking-details">
+            <div class="booking-detail-row">
+              <span class="label">Lieu</span>
+              <span class="value">Bois de la Cambre</span>
+            </div>
+            <div class="booking-detail-row">
+              <span class="label">Durée</span>
+              <span class="value">1h30</span>
+            </div>
+            <div class="booking-detail-row">
+              <span class="label">Matériel</span>
+              <span class="value">Fourni sur place</span>
+            </div>
+            <div class="booking-detail-row">
+              <span class="label">Niveau</span>
+              <span class="value">Tous niveaux</span>
+            </div>
+          </div>
+
+          <!-- Mollie Payment Link — remplacer href par le vrai lien Mollie -->
+          <a href="#" class="booking-cta" id="mollie-btn">
+            Réserver ma place — 25 €
+          </a>
+          <p class="booking-note">Paiement sécurisé via Mollie · Remboursement si annulation 48h avant</p>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- ======== FOOTER ======== -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <div class="footer-logo">
+            <img src="assets/masque-clean.png" alt="Tribu·M" class="footer-masque">
+            <span class="footer-name">Tribu<span>·M</span></span>
+          </div>
+          <p>Mouvement · Musique · Meet<br>Événements afterwork à Bruxelles.</p>
+        </div>
+        <div class="footer-col">
+          <h4>Navigation</h4>
+          <ul>
+            <li><a href="index.html">Accueil</a></li>
+            <li><a href="evenements.html">Événements</a></li>
+            <li><a href="team.html">L'équipe</a></li>
+            <li><a href="entreprises.html">Entreprises</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>Contact</h4>
+          <ul>
+            <li><a href="mailto:hello@tribu-m.eu">hello@tribu-m.eu</a></li>
+            <li><a href="#">Instagram</a></li>
+            <li><a href="#">Facebook</a></li>
+          </ul>
+        </div>
+        <div class="footer-newsletter">
+          <label for="nl-email-ev-detail">Restez dans la boucle</label>
+          <form class="newsletter-form" onsubmit="handleNL(event)">
+            <input type="email" id="nl-email-ev-detail" placeholder="ton@email.com" required>
+            <button type="submit">OK →</button>
+          </form>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p>© 2026 Tribu·M — tribu-m.eu · Bruxelles, Belgique</p>
+        <div class="footer-social">
+          <a href="#">Instagram</a><a href="#">Facebook</a><a href="#">LinkedIn</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    const navbar = document.getElementById('navbar');
+    window.addEventListener('scroll', () => { navbar.classList.toggle('scrolled', window.scrollY > 60); }, { passive: true });
+    const hamburger = document.getElementById('hamburger');
+    const mobileMenu = document.getElementById('mobile-menu');
+    hamburger.addEventListener('click', () => {
+      const isOpen = hamburger.classList.toggle('open');
+      mobileMenu.classList.toggle('open', isOpen);
+      hamburger.setAttribute('aria-expanded', isOpen);
+    });
+    document.querySelectorAll('.lang-selector').forEach(sel => {
+      sel.querySelectorAll('.lang-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+          sel.querySelectorAll('.lang-btn').forEach(b => b.classList.remove('active'));
+          btn.classList.add('active');
+        });
+      });
+    });
+    function handleNL(e) {
+      e.preventDefault();
+      const btn = e.target.querySelector('button');
+      btn.textContent = '✓'; btn.style.background = 'var(--miel)'; btn.style.color = 'var(--foret)';
+      setTimeout(() => { btn.textContent = 'OK →'; btn.style.background = ''; btn.style.color = ''; }, 3000);
+    }
+  </script>
+</body>
+</html>

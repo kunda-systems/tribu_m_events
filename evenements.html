@@ -1,0 +1,466 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Tous les événements Tribu·M à Bruxelles — Cycling, Yoga, Pilates et Dance Flow au coucher du soleil.">
+  <title>Événements — Tribu·M</title>
+  <link rel="stylesheet" href="style.css">
+  <style>
+    /* ---- EVENTS PAGE SPECIFIC ---- */
+    .events-hero {
+      padding: 9rem 0 4rem;
+      background: var(--creme);
+      text-align: center;
+    }
+    .events-hero h1 { margin-bottom: 0.75rem; }
+    .events-hero p  { max-width: 500px; margin: 0 auto; font-size: 1.05rem; }
+
+    .filters-bar {
+      background: var(--creme);
+      padding: 2rem 0 3rem;
+      position: sticky;
+      top: 72px;
+      z-index: 100;
+      border-bottom: 1px solid rgba(31,56,49,.07);
+    }
+    .filters-inner {
+      display: flex;
+      gap: 0.5rem;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+    .filter-btn {
+      background: transparent;
+      border: 2px solid rgba(31,56,49,.18);
+      color: var(--foret);
+      font-family: var(--f-body);
+      font-size: 0.82rem;
+      font-weight: 700;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      padding: 0.55rem 1.25rem;
+      border-radius: 100px;
+      cursor: pointer;
+      transition: all var(--ease);
+    }
+    .filter-btn:hover  { border-color: var(--terra); color: var(--terra); }
+    .filter-btn.active { background: var(--foret); border-color: var(--foret); color: var(--creme); }
+
+    .events-section { background: var(--sable); padding: 4rem 0 6rem; }
+
+    .events-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.5rem;
+    }
+
+    .event-card {
+      background: var(--creme);
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+      box-shadow: var(--shadow);
+      transition: transform var(--ease), box-shadow var(--ease);
+      display: flex;
+      flex-direction: column;
+    }
+    .event-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 12px 36px rgba(31,56,49,.14);
+    }
+    .event-card-img {
+      position: relative;
+      height: 200px;
+      background-size: cover;
+      background-position: center;
+      overflow: hidden;
+    }
+    .event-card-img::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to top, rgba(31,56,49,.4) 0%, transparent 60%);
+    }
+    .event-card-img .card-tag {
+      position: absolute;
+      top: 1rem; left: 1rem;
+      z-index: 1;
+      background: var(--terra);
+      color: var(--creme);
+      font-size: 0.65rem;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      padding: 0.3rem 0.75rem;
+      border-radius: 100px;
+    }
+    .event-card-img .card-tag.tag-yoga   { background: var(--abricot); }
+    .event-card-img .card-tag.tag-pilates { background: var(--miel); color: var(--foret); }
+    .event-card-img .card-tag.tag-dance  { background: var(--prune); }
+    .event-card-spots {
+      position: absolute;
+      bottom: 0.75rem; right: 1rem;
+      z-index: 1;
+      color: var(--creme);
+      font-size: 0.72rem;
+      font-weight: 700;
+    }
+    .event-card-body {
+      padding: 1.5rem;
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+    }
+    .event-card-body h3 { font-size: 1.15rem; margin: 0; }
+    .event-card-meta {
+      display: flex;
+      flex-direction: column;
+      gap: 0.3rem;
+      margin-bottom: 0.25rem;
+    }
+    .event-card-meta span {
+      font-size: 0.82rem;
+      color: var(--foret);
+      opacity: 0.65;
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+    }
+    .event-card-footer {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-top: auto;
+      padding-top: 1rem;
+      border-top: 1px solid rgba(31,56,49,.08);
+    }
+    .event-card-price {
+      font-family: var(--f-title);
+      font-size: 1.4rem;
+      font-weight: 600;
+      color: var(--foret);
+    }
+    .event-card-price span {
+      font-family: var(--f-body);
+      font-size: 0.75rem;
+      font-weight: 400;
+      opacity: 0.5;
+    }
+
+    .no-events {
+      grid-column: 1 / -1;
+      text-align: center;
+      padding: 4rem 2rem;
+      color: var(--foret);
+      opacity: 0.5;
+      font-size: 1rem;
+    }
+
+    @media (max-width: 1024px) {
+      .events-grid { grid-template-columns: repeat(2, 1fr); }
+    }
+    @media (max-width: 600px) {
+      .events-grid { grid-template-columns: 1fr; }
+      .filters-inner { gap: 0.4rem; }
+      .filter-btn { font-size: 0.75rem; padding: 0.5rem 1rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ======== NAVIGATION ======== -->
+  <nav class="navbar scrolled" id="navbar">
+    <div class="nav-inner">
+      <a href="index.html" class="nav-logo">
+        <img src="assets/masque-clean.png" alt="Tribu·M" class="nav-masque">
+        <span class="nav-brand">Tribu<span class="nav-m">·M</span></span>
+      </a>
+      <ul class="nav-links">
+        <li><a href="index.html">Accueil</a></li>
+        <li><a href="evenements.html" class="active">Événements</a></li>
+        <li><a href="team.html">L'équipe</a></li>
+        <li><a href="entreprises.html">Entreprises</a></li>
+      </ul>
+      <div class="nav-right">
+        <div class="lang-selector">
+          <button class="lang-btn active">FR</button>
+          <button class="lang-btn">NL</button>
+          <button class="lang-btn">EN</button>
+        </div>
+        <a href="#events-grid" class="btn-primary">Réserver</a>
+        <button class="hamburger" id="hamburger" aria-label="Ouvrir le menu" aria-expanded="false">
+          <span></span><span></span><span></span>
+        </button>
+      </div>
+    </div>
+    <div class="mobile-menu" id="mobile-menu" aria-hidden="true">
+      <ul>
+        <li><a href="index.html">Accueil</a></li>
+        <li><a href="evenements.html">Événements</a></li>
+        <li><a href="team.html">L'équipe</a></li>
+        <li><a href="entreprises.html">Entreprises</a></li>
+      </ul>
+      <div class="lang-selector mobile">
+        <button class="lang-btn active">FR</button>
+        <button class="lang-btn">NL</button>
+        <button class="lang-btn">EN</button>
+      </div>
+    </div>
+  </nav>
+
+  <!-- ======== HERO ======== -->
+  <div class="events-hero">
+    <div class="container">
+      <span class="section-label">Bruxelles · Été 2026</span>
+      <h1>Réserve ta place.</h1>
+      <p>Des événements afterwork en plein air — chaque semaine, au coucher du soleil.</p>
+    </div>
+  </div>
+
+  <!-- ======== FILTRES ======== -->
+  <div class="filters-bar">
+    <div class="filters-inner">
+      <button class="filter-btn active" data-filter="all">Tous</button>
+      <button class="filter-btn" data-filter="cycling">Cycling</button>
+      <button class="filter-btn" data-filter="yoga">Yoga</button>
+      <button class="filter-btn" data-filter="pilates">Pilates</button>
+      <button class="filter-btn" data-filter="dance">Dance Flow</button>
+    </div>
+  </div>
+
+  <!-- ======== ÉVÉNEMENTS ======== -->
+  <section class="events-section">
+    <div class="container">
+      <div class="events-grid" id="events-grid">
+        <!-- Injected by JS -->
+      </div>
+    </div>
+  </section>
+
+  <!-- ======== FOOTER ======== -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <div class="footer-logo">
+            <img src="assets/masque-clean.png" alt="Tribu·M" class="footer-masque">
+            <span class="footer-name">Tribu<span>·M</span></span>
+          </div>
+          <p>Mouvement · Musique · Meet<br>Événements afterwork à Bruxelles.</p>
+        </div>
+        <div class="footer-col">
+          <h4>Navigation</h4>
+          <ul>
+            <li><a href="index.html">Accueil</a></li>
+            <li><a href="evenements.html">Événements</a></li>
+            <li><a href="team.html">L'équipe</a></li>
+            <li><a href="entreprises.html">Entreprises</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>Contact</h4>
+          <ul>
+            <li><a href="mailto:hello@tribu-m.eu">hello@tribu-m.eu</a></li>
+            <li><a href="#">Instagram</a></li>
+            <li><a href="#">Facebook</a></li>
+          </ul>
+        </div>
+        <div class="footer-newsletter">
+          <label for="nl-email-ev">Restez dans la boucle</label>
+          <form class="newsletter-form" onsubmit="handleNL(event)">
+            <input type="email" id="nl-email-ev" placeholder="ton@email.com" required>
+            <button type="submit">OK →</button>
+          </form>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p>© 2026 Tribu·M — tribu-m.eu · Bruxelles, Belgique</p>
+        <div class="footer-social">
+          <a href="#">Instagram</a>
+          <a href="#">Facebook</a>
+          <a href="#">LinkedIn</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    // ---- EVENTS DATA ----
+    const EVENTS = [
+      {
+        id: 'cycling-cambre-0614',
+        type: 'cycling',
+        title: 'Cycling Sunset',
+        location: 'Bois de la Cambre',
+        dateStr: 'Sam 14 juin 2026',
+        time: '18h30 – 20h00',
+        price: 25,
+        spots: 25,
+        available: 8,
+        img: 'assets/cycling-bg.png',
+        url: 'event-cycling-bois-cambre.html'
+      },
+      {
+        id: 'yoga-cinquantenaire-0621',
+        type: 'yoga',
+        title: 'Yoga Flow Sunset',
+        location: 'Parc du Cinquantenaire',
+        dateStr: 'Sam 21 juin 2026',
+        time: '17h00 – 18h30',
+        price: 20,
+        spots: 20,
+        available: 15,
+        img: 'assets/yoga-bg.png',
+        url: 'event-yoga-cinquantenaire.html'
+      },
+      {
+        id: 'pilates-laeken-0628',
+        type: 'pilates',
+        title: 'Pilates Outdoor',
+        location: 'Parc de Laeken',
+        dateStr: 'Sam 28 juin 2026',
+        time: '18h00 – 19h30',
+        price: 22,
+        spots: 15,
+        available: 5,
+        img: 'assets/pilates-bg.png',
+        url: 'event-pilates-laeken.html'
+      },
+      {
+        id: 'dance-soignes-0705',
+        type: 'dance',
+        title: 'Dance Flow',
+        location: 'Forêt de Soignes',
+        dateStr: 'Dim 5 juillet 2026',
+        time: '17h30 – 19h00',
+        price: 20,
+        spots: 25,
+        available: 20,
+        img: 'assets/yoga-bg.png',
+        url: 'event-dance-flow-soignes.html'
+      },
+      {
+        id: 'cycling-cambre-0712',
+        type: 'cycling',
+        title: 'Cycling Sunset',
+        location: 'Bois de la Cambre',
+        dateStr: 'Dim 12 juillet 2026',
+        time: '18h30 – 20h00',
+        price: 25,
+        spots: 25,
+        available: 25,
+        img: 'assets/cycling-bg.png',
+        url: 'event-cycling-bois-cambre-07.html'
+      },
+      {
+        id: 'pilates-cambre-0719',
+        type: 'pilates',
+        title: 'Pilates Outdoor',
+        location: 'Bois de la Cambre',
+        dateStr: 'Dim 19 juillet 2026',
+        time: '18h00 – 19h30',
+        price: 22,
+        spots: 15,
+        available: 15,
+        img: 'assets/pilates-bg.png',
+        url: 'event-pilates-cambre-07.html'
+      },
+    ];
+
+    const tagClass = { cycling: '', yoga: 'tag-yoga', pilates: 'tag-pilates', dance: 'tag-dance' };
+    const tagLabel = { cycling: 'Cycling', yoga: 'Yoga', pilates: 'Pilates', dance: 'Dance Flow' };
+
+    function spotsLabel(av) {
+      if (av === 0) return '🔴 Complet';
+      if (av <= 5)  return `🟠 ${av} places restantes`;
+      return `✓ ${av} places`;
+    }
+
+    function renderCard(ev) {
+      return `
+      <div class="event-card" data-type="${ev.type}">
+        <div class="event-card-img" style="background-image:url('${ev.img}')">
+          <span class="card-tag ${tagClass[ev.type]}">${tagLabel[ev.type]}</span>
+          <span class="event-card-spots">${spotsLabel(ev.available)}</span>
+        </div>
+        <div class="event-card-body">
+          <h3>${ev.title}</h3>
+          <div class="event-card-meta">
+            <span>📅 ${ev.dateStr} · ${ev.time}</span>
+            <span>📍 ${ev.location}, Bruxelles</span>
+          </div>
+          <div class="event-card-footer">
+            <div class="event-card-price">${ev.price} €<span> / pers.</span></div>
+            <a href="${ev.url}" class="btn-primary${ev.available===0?' disabled':''}"
+               ${ev.available===0?'style="opacity:.5;pointer-events:none"':''}>
+              ${ev.available===0?'Complet':'Réserver →'}
+            </a>
+          </div>
+        </div>
+      </div>`;
+    }
+
+    let currentFilter = 'all';
+
+    function renderGrid(filter) {
+      const grid = document.getElementById('events-grid');
+      const filtered = filter === 'all' ? EVENTS : EVENTS.filter(e => e.type === filter);
+      if (filtered.length === 0) {
+        grid.innerHTML = '<p class="no-events">Aucun événement prévu pour cette catégorie pour le moment.<br>Reviens bientôt !</p>';
+      } else {
+        grid.innerHTML = filtered.map(renderCard).join('');
+      }
+    }
+
+    // Filters
+    document.querySelectorAll('.filter-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        currentFilter = btn.dataset.filter;
+        renderGrid(currentFilter);
+      });
+    });
+
+    // Check URL param
+    const params = new URLSearchParams(location.search);
+    const filterParam = params.get('filter');
+    if (filterParam) {
+      currentFilter = filterParam;
+      const btn = document.querySelector(`[data-filter="${filterParam}"]`);
+      if (btn) {
+        document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+      }
+    }
+    renderGrid(currentFilter);
+
+    // Hamburger
+    const hamburger = document.getElementById('hamburger');
+    const mobileMenu = document.getElementById('mobile-menu');
+    hamburger.addEventListener('click', () => {
+      const isOpen = hamburger.classList.toggle('open');
+      mobileMenu.classList.toggle('open', isOpen);
+      hamburger.setAttribute('aria-expanded', isOpen);
+    });
+
+    // Lang
+    document.querySelectorAll('.lang-selector').forEach(sel => {
+      sel.querySelectorAll('.lang-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+          sel.querySelectorAll('.lang-btn').forEach(b => b.classList.remove('active'));
+          btn.classList.add('active');
+        });
+      });
+    });
+
+    function handleNL(e) {
+      e.preventDefault();
+      const btn = e.target.querySelector('button');
+      btn.textContent = '✓'; btn.style.background = 'var(--miel)'; btn.style.color = 'var(--foret)';
+      setTimeout(() => { btn.textContent = 'OK →'; btn.style.background = ''; btn.style.color = ''; }, 3000);
+    }
+  </script>
+</body>
+</html>

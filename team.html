@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="L'équipe Tribu·M — Les personnes qui créent les expériences mouvement, musique et connexion à Bruxelles.">
+  <title>L'équipe — Tribu·M</title>
+  <link rel="stylesheet" href="style.css">
+  <style>
+    .team-hero {
+      padding: 10rem 0 6rem;
+      background: var(--creme);
+      text-align: center;
+    }
+    .team-hero h1 { margin-bottom: 0.75rem; }
+    .team-hero p  { max-width: 540px; margin: 0 auto; font-size: 1.05rem; }
+
+    .team-section { background: var(--sable); padding: 5rem 0 7rem; }
+
+    .team-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 2rem;
+      margin-bottom: 5rem;
+    }
+
+    .team-card {
+      background: var(--creme);
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+      box-shadow: var(--shadow);
+      transition: transform var(--ease), box-shadow var(--ease);
+    }
+    .team-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 12px 36px rgba(31,56,49,.12);
+    }
+    .team-card-photo {
+      height: 280px;
+      background-size: cover;
+      background-position: center top;
+      position: relative;
+    }
+    .team-card-photo .team-role {
+      position: absolute;
+      bottom: 1rem; left: 1rem;
+      background: var(--terra);
+      color: var(--creme);
+      font-size: 0.68rem;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      padding: 0.3rem 0.8rem;
+      border-radius: 100px;
+    }
+    .team-card-body {
+      padding: 1.75rem;
+    }
+    .team-card-body h3 { font-size: 1.25rem; margin-bottom: 0.2rem; }
+    .team-card-body .team-specialty {
+      font-size: 0.8rem;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--terra);
+      margin-bottom: 0.75rem;
+    }
+    .team-card-body p { font-size: 0.9rem; opacity: 0.75; }
+
+    /* Values section */
+    .values-section {
+      background: var(--creme);
+      padding: 6rem 0;
+    }
+    .values-section .section-header { text-align: center; margin-bottom: 3.5rem; }
+    .values-section .section-header h2 { margin-bottom: 0.5rem; }
+
+    .values-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 2rem;
+    }
+    .value-item {
+      text-align: center;
+      padding: 2.5rem 2rem;
+      border-radius: var(--radius-lg);
+      background: var(--sable);
+      transition: transform var(--ease);
+    }
+    .value-item:hover { transform: translateY(-3px); }
+    .value-icon {
+      font-size: 2.5rem;
+      margin-bottom: 1rem;
+      display: block;
+    }
+    .value-item h3 { font-size: 1.25rem; margin-bottom: 0.75rem; }
+    .value-item p  { font-size: 0.9rem; opacity: 0.75; }
+
+    /* Join CTA */
+    .join-section {
+      background: var(--foret);
+      padding: 6rem 0;
+      text-align: center;
+    }
+    .join-section h2 { color: var(--creme); font-style: italic; margin-bottom: 1rem; margin-top: 0.5rem; }
+    .join-section p  { color: rgba(255,246,232,.72); opacity:1; max-width: 500px; margin: 0 auto 2.5rem; }
+
+    @media (max-width: 900px) {
+      .team-grid   { grid-template-columns: repeat(2, 1fr); }
+      .values-grid { grid-template-columns: repeat(2, 1fr); }
+    }
+    @media (max-width: 600px) {
+      .team-grid   { grid-template-columns: 1fr; }
+      .values-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ======== NAVIGATION ======== -->
+  <nav class="navbar scrolled" id="navbar">
+    <div class="nav-inner">
+      <a href="index.html" class="nav-logo">
+        <img src="assets/masque-clean.png" alt="Tribu·M" class="nav-masque">
+        <span class="nav-brand">Tribu<span class="nav-m">·M</span></span>
+      </a>
+      <ul class="nav-links">
+        <li><a href="index.html">Accueil</a></li>
+        <li><a href="evenements.html">Événements</a></li>
+        <li><a href="team.html" class="active">L'équipe</a></li>
+        <li><a href="entreprises.html">Entreprises</a></li>
+      </ul>
+      <div class="nav-right">
+        <div class="lang-selector">
+          <button class="lang-btn active">FR</button>
+          <button class="lang-btn">NL</button>
+          <button class="lang-btn">EN</button>
+        </div>
+        <a href="evenements.html" class="btn-primary">Réserver</a>
+        <button class="hamburger" id="hamburger" aria-label="Ouvrir le menu" aria-expanded="false">
+          <span></span><span></span><span></span>
+        </button>
+      </div>
+    </div>
+    <div class="mobile-menu" id="mobile-menu" aria-hidden="true">
+      <ul>
+        <li><a href="index.html">Accueil</a></li>
+        <li><a href="evenements.html">Événements</a></li>
+        <li><a href="team.html">L'équipe</a></li>
+        <li><a href="entreprises.html">Entreprises</a></li>
+      </ul>
+      <div class="lang-selector mobile">
+        <button class="lang-btn active">FR</button>
+        <button class="lang-btn">NL</button>
+        <button class="lang-btn">EN</button>
+      </div>
+    </div>
+  </nav>
+
+  <!-- ======== HERO ======== -->
+  <div class="team-hero">
+    <div class="container">
+      <span class="section-label">Celles et ceux qui font Tribu·M</span>
+      <h1>L'équipe</h1>
+      <p>Des passionné·es du mouvement, de la musique et de la connexion humaine, rassemblé·es pour créer des expériences qui restent.</p>
+    </div>
+  </div>
+
+  <!-- ======== TEAM ======== -->
+  <section class="team-section">
+    <div class="container">
+      <div class="team-grid">
+
+        <div class="team-card">
+          <div class="team-card-photo" style="background-image: url('assets/cycling-bg.png')">
+            <span class="team-role">Co-fondatrice</span>
+          </div>
+          <div class="team-card-body">
+            <h3>À compléter</h3>
+            <div class="team-specialty">Cycling · Direction artistique</div>
+            <p>Texte à fournir par le client — parcours, passion, lien avec Tribu·M.</p>
+          </div>
+        </div>
+
+        <div class="team-card">
+          <div class="team-card-photo" style="background-image: url('assets/yoga-bg.png')">
+            <span class="team-role">Instructrice Yoga</span>
+          </div>
+          <div class="team-card-body">
+            <h3>À compléter</h3>
+            <div class="team-specialty">Yoga · Pilates</div>
+            <p>Texte à fournir par le client — parcours, certifications, philosophie.</p>
+          </div>
+        </div>
+
+        <div class="team-card">
+          <div class="team-card-photo" style="background-image: url('assets/pilates-bg.png')">
+            <span class="team-role">Instructeur Cycling</span>
+          </div>
+          <div class="team-card-body">
+            <h3>À compléter</h3>
+            <div class="team-specialty">Cycling · DJ</div>
+            <p>Texte à fournir par le client — parcours, énergie scène, playlists.</p>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ======== VALEURS ======== -->
+  <section class="values-section">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-label">Ce qu'on croit</span>
+        <h2>Nos valeurs</h2>
+      </div>
+      <div class="values-grid">
+        <div class="value-item">
+          <span class="value-icon">🌿</span>
+          <h3>Inclusivité</h3>
+          <p>Ici, tous les niveaux et tous les corps sont les bienvenus. Pas de jugement, pas de comparaison — juste le plaisir de bouger.</p>
+        </div>
+        <div class="value-item">
+          <span class="value-icon">🎵</span>
+          <h3>Musique & énergie</h3>
+          <p>La musique n'est pas un fond sonore — elle est le moteur. Chaque playlist est pensée pour porter le groupe.</p>
+        </div>
+        <div class="value-item">
+          <span class="value-icon">🤝</span>
+          <h3>Connexion vraie</h3>
+          <p>On crée des espaces où les gens se retrouvent, pas juste des événements. Chaque Tribu·M est une occasion de rencontre authentique.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ======== JOIN CTA ======== -->
+  <section class="join-section">
+    <div class="container">
+      <span class="section-label" style="color: var(--miel)">Rejoins-nous</span>
+      <h2>Prêt·e à vivre l'expérience ?</h2>
+      <p>Chaque événement est une nouvelle occasion de bouger, de ressentir et de se connecter.</p>
+      <a href="evenements.html" class="btn-primary btn-lg">Voir les événements</a>
+    </div>
+  </section>
+
+  <!-- ======== FOOTER ======== -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <div class="footer-logo">
+            <img src="assets/masque-clean.png" alt="Tribu·M" class="footer-masque">
+            <span class="footer-name">Tribu<span>·M</span></span>
+          </div>
+          <p>Mouvement · Musique · Meet<br>Événements afterwork à Bruxelles.</p>
+        </div>
+        <div class="footer-col">
+          <h4>Navigation</h4>
+          <ul>
+            <li><a href="index.html">Accueil</a></li>
+            <li><a href="evenements.html">Événements</a></li>
+            <li><a href="team.html">L'équipe</a></li>
+            <li><a href="entreprises.html">Entreprises</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>Contact</h4>
+          <ul>
+            <li><a href="mailto:hello@tribu-m.eu">hello@tribu-m.eu</a></li>
+            <li><a href="#">Instagram</a></li>
+            <li><a href="#">Facebook</a></li>
+          </ul>
+        </div>
+        <div class="footer-newsletter">
+          <label for="nl-email-team">Restez dans la boucle</label>
+          <form class="newsletter-form" onsubmit="handleNL(event)">
+            <input type="email" id="nl-email-team" placeholder="ton@email.com" required>
+            <button type="submit">OK →</button>
+          </form>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p>© 2026 Tribu·M — tribu-m.eu · Bruxelles, Belgique</p>
+        <div class="footer-social">
+          <a href="#">Instagram</a><a href="#">Facebook</a><a href="#">LinkedIn</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    const hamburger = document.getElementById('hamburger');
+    const mobileMenu = document.getElementById('mobile-menu');
+    hamburger.addEventListener('click', () => {
+      const isOpen = hamburger.classList.toggle('open');
+      mobileMenu.classList.toggle('open', isOpen);
+      hamburger.setAttribute('aria-expanded', isOpen);
+    });
+    document.querySelectorAll('.lang-selector').forEach(sel => {
+      sel.querySelectorAll('.lang-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+          sel.querySelectorAll('.lang-btn').forEach(b => b.classList.remove('active'));
+          btn.classList.add('active');
+        });
+      });
+    });
+    function handleNL(e) {
+      e.preventDefault();
+      const btn = e.target.querySelector('button');
+      btn.textContent = '✓'; btn.style.background = 'var(--miel)'; btn.style.color = 'var(--foret)';
+      setTimeout(() => { btn.textContent = 'OK →'; btn.style.background = ''; btn.style.color = ''; }, 3000);
+    }
+  </script>
+</body>
+</html>

@@ -1,0 +1,581 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Tribu·M Entreprises — Team building sur mesure. Cycling, Yoga, Pilates ou Dance Flow pour vos équipes à Bruxelles.">
+  <title>Entreprises — Tribu·M</title>
+  <link rel="stylesheet" href="style.css">
+  <style>
+    .b2b-hero {
+      min-height: 70vh;
+      position: relative;
+      display: flex;
+      align-items: center;
+      background-image: url('assets/cycling-bg.png');
+      background-size: cover;
+      background-position: center 40%;
+    }
+    .b2b-hero .hero-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to right,
+        rgba(31,56,49,0.75) 0%,
+        rgba(31,56,49,0.35) 60%,
+        transparent 100%);
+    }
+    .b2b-hero-content {
+      position: relative;
+      z-index: 1;
+      max-width: 580px;
+      padding: 5rem 0;
+    }
+    .b2b-hero-content h1 { color: var(--creme); font-size: clamp(2.2rem, 5vw, 3.5rem); margin-bottom: 1rem; }
+    .b2b-hero-content p  { color: rgba(255,246,232,.9); opacity:1; font-size: 1.1rem; margin-bottom: 2rem; }
+
+    /* WHY section */
+    .why-section { background: var(--creme); padding: 6rem 0; }
+    .why-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 5rem;
+      align-items: center;
+    }
+    .why-text h2 { font-style: italic; margin-bottom: 1.25rem; margin-top: 0.5rem; }
+    .why-text p  { margin-bottom: 1rem; }
+    .why-stats {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1.25rem;
+    }
+    .stat-card {
+      background: var(--sable);
+      border-radius: var(--radius-lg);
+      padding: 1.5rem;
+      text-align: center;
+      border-bottom: 3px solid var(--terra);
+      transition: transform var(--ease);
+    }
+    .stat-card:hover { transform: translateY(-3px); }
+    .stat-num {
+      font-family: var(--f-title);
+      font-size: 2.2rem;
+      font-weight: 700;
+      color: var(--terra);
+      line-height: 1;
+      margin-bottom: 0.25rem;
+    }
+    .stat-label { font-size: 0.78rem; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; opacity: 0.6; }
+
+    /* OFFER section */
+    .offer-section { background: var(--sable); padding: 6rem 0; }
+    .offer-section .section-header { text-align: center; margin-bottom: 3.5rem; }
+    .offer-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.5rem;
+    }
+    .offer-card {
+      background: var(--creme);
+      border-radius: var(--radius-lg);
+      padding: 2.25rem;
+      box-shadow: var(--shadow);
+      transition: transform var(--ease), box-shadow var(--ease);
+      position: relative;
+      overflow: hidden;
+    }
+    .offer-card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 4px;
+      background: var(--terra);
+    }
+    .offer-card.featured::before { background: var(--foret); }
+    .offer-card:hover { transform: translateY(-4px); box-shadow: 0 12px 36px rgba(31,56,49,.12); }
+    .offer-card .offer-tag {
+      display: inline-block;
+      font-size: 0.65rem;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      background: var(--terra);
+      color: var(--creme);
+      padding: 0.25rem 0.7rem;
+      border-radius: 100px;
+      margin-bottom: 1rem;
+    }
+    .offer-card.featured .offer-tag { background: var(--foret); }
+    .offer-card h3 { font-size: 1.3rem; margin-bottom: 0.5rem; }
+    .offer-card .offer-group {
+      font-size: 0.82rem;
+      color: var(--terra);
+      font-weight: 700;
+      margin-bottom: 1.25rem;
+    }
+    .offer-card ul {
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+      margin-bottom: 2rem;
+    }
+    .offer-card li {
+      font-size: 0.88rem;
+      opacity: 0.8;
+      display: flex;
+      align-items: flex-start;
+      gap: 0.5rem;
+    }
+    .offer-card li::before {
+      content: '✓';
+      color: var(--terra);
+      font-weight: 700;
+      flex-shrink: 0;
+    }
+    .offer-price {
+      font-family: var(--f-title);
+      font-size: 1.6rem;
+      font-weight: 600;
+      margin-bottom: 1rem;
+    }
+    .offer-price span { font-family: var(--f-body); font-size: 0.82rem; font-weight: 400; opacity: 0.55; }
+
+    /* HOW IT WORKS */
+    .how-section { background: var(--creme); padding: 6rem 0; }
+    .how-section .section-header { text-align: center; margin-bottom: 3.5rem; }
+    .steps {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 2rem;
+      position: relative;
+    }
+    .steps::before {
+      content: '';
+      position: absolute;
+      top: 28px;
+      left: 12%;
+      right: 12%;
+      height: 2px;
+      background: var(--sable);
+      z-index: 0;
+    }
+    .step {
+      text-align: center;
+      position: relative;
+      z-index: 1;
+    }
+    .step-num {
+      width: 56px; height: 56px;
+      background: var(--sable);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 1.25rem;
+      font-family: var(--f-title);
+      font-size: 1.3rem;
+      font-weight: 700;
+      color: var(--terra);
+      border: 3px solid var(--creme);
+      transition: background var(--ease), color var(--ease);
+    }
+    .step:hover .step-num { background: var(--terra); color: var(--creme); }
+    .step h4 { font-size: 1rem; margin-bottom: 0.5rem; }
+    .step p  { font-size: 0.85rem; opacity: 0.7; }
+
+    /* CONTACT */
+    .contact-section { background: var(--foret); padding: 7rem 0; }
+    .contact-inner {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 5rem;
+      align-items: center;
+    }
+    .contact-text h2 { color: var(--creme); font-style: italic; margin-bottom: 1rem; margin-top: 0.5rem; }
+    .contact-text p  { color: rgba(255,246,232,.7); opacity:1; margin-bottom: 1.5rem; }
+    .contact-text ul { display: flex; flex-direction: column; gap: 0.65rem; }
+    .contact-text li {
+      color: rgba(255,246,232,.7);
+      font-size: 0.9rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+    .contact-form-box {
+      background: rgba(255,246,232,.06);
+      border: 1px solid rgba(255,246,232,.12);
+      border-radius: var(--radius-lg);
+      padding: 2.5rem;
+    }
+    .contact-form-box h3 { color: var(--creme); font-size: 1.25rem; margin-bottom: 1.75rem; }
+    .form-row { margin-bottom: 1.25rem; }
+    .form-row label {
+      display: block;
+      font-size: 0.72rem;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: rgba(255,246,232,.45);
+      margin-bottom: 0.4rem;
+    }
+    .form-row input,
+    .form-row select,
+    .form-row textarea {
+      width: 100%;
+      background: rgba(255,246,232,.08);
+      border: 1px solid rgba(255,246,232,.15);
+      border-radius: var(--radius);
+      padding: 0.75rem 1rem;
+      color: var(--creme);
+      font-family: var(--f-body);
+      font-size: 0.9rem;
+      outline: none;
+      transition: border-color var(--ease);
+    }
+    .form-row input:focus,
+    .form-row select:focus,
+    .form-row textarea:focus {
+      border-color: rgba(255,246,232,.4);
+    }
+    .form-row input::placeholder,
+    .form-row textarea::placeholder { color: rgba(255,246,232,.25); }
+    .form-row select option { background: var(--foret); }
+    .form-row textarea { resize: vertical; min-height: 100px; }
+
+    @media (max-width: 1024px) {
+      .why-grid    { grid-template-columns: 1fr; gap: 3rem; }
+      .why-stats   { grid-template-columns: repeat(2, 1fr); }
+      .offer-grid  { grid-template-columns: 1fr; }
+      .steps       { grid-template-columns: repeat(2, 1fr); }
+      .steps::before { display: none; }
+      .contact-inner { grid-template-columns: 1fr; gap: 3rem; }
+    }
+    @media (max-width: 600px) {
+      .steps { grid-template-columns: 1fr; }
+      .why-stats { grid-template-columns: 1fr 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ======== NAVIGATION ======== -->
+  <nav class="navbar" id="navbar">
+    <div class="nav-inner">
+      <a href="index.html" class="nav-logo">
+        <img src="assets/masque-clean.png" alt="Tribu·M" class="nav-masque">
+        <span class="nav-brand">Tribu<span class="nav-m">·M</span></span>
+      </a>
+      <ul class="nav-links">
+        <li><a href="index.html">Accueil</a></li>
+        <li><a href="evenements.html">Événements</a></li>
+        <li><a href="team.html">L'équipe</a></li>
+        <li><a href="entreprises.html" class="active">Entreprises</a></li>
+      </ul>
+      <div class="nav-right">
+        <div class="lang-selector">
+          <button class="lang-btn active">FR</button>
+          <button class="lang-btn">NL</button>
+          <button class="lang-btn">EN</button>
+        </div>
+        <a href="#contact" class="btn-primary">Demander un devis</a>
+        <button class="hamburger" id="hamburger" aria-label="Ouvrir le menu" aria-expanded="false">
+          <span></span><span></span><span></span>
+        </button>
+      </div>
+    </div>
+    <div class="mobile-menu" id="mobile-menu" aria-hidden="true">
+      <ul>
+        <li><a href="index.html">Accueil</a></li>
+        <li><a href="evenements.html">Événements</a></li>
+        <li><a href="team.html">L'équipe</a></li>
+        <li><a href="entreprises.html">Entreprises</a></li>
+      </ul>
+      <div class="lang-selector mobile">
+        <button class="lang-btn active">FR</button>
+        <button class="lang-btn">NL</button>
+        <button class="lang-btn">EN</button>
+      </div>
+    </div>
+  </nav>
+
+  <!-- ======== HERO ======== -->
+  <section class="b2b-hero">
+    <div class="hero-overlay"></div>
+    <div class="container">
+      <div class="b2b-hero-content">
+        <span class="section-label" style="color:var(--miel)">Team building</span>
+        <h1>Connectez vos équipes autrement.</h1>
+        <p>Des événements sur mesure qui rassemblent, dynamisent et créent du lien vrai — bien au-delà du bureau.</p>
+        <a href="#contact" class="btn-primary btn-lg">Demander un devis</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ======== WHY ======== -->
+  <section class="why-section" id="why">
+    <div class="container">
+      <div class="why-grid">
+        <div class="why-text">
+          <span class="section-label">Pourquoi Tribu·M ?</span>
+          <h2>Le mouvement collectif crée du lien que les séminaires ne créent pas.</h2>
+          <p>Transpirer ensemble, bouger au même rythme, sourire au même moment — ces expériences partagées génèrent une cohésion que les team buildings classiques peinent à atteindre.</p>
+          <p>Chez Tribu·M, on conçoit des événements qui laissent une trace : pas un souvenir de PowerPoint, mais une sensation de tribu.</p>
+          <a href="#contact" class="btn-secondary" style="margin-top:1.5rem">Organiser pour mon entreprise</a>
+        </div>
+        <div class="why-stats">
+          <div class="stat-card">
+            <div class="stat-num">+34%</div>
+            <div class="stat-label">cohésion d'équipe après une activité physique collective</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-num">×2</div>
+            <div class="stat-label">endorphines libérées en groupe vs en solo</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-num">87%</div>
+            <div class="stat-label">des participants recommandent à leurs collègues</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-num">100%</div>
+            <div class="stat-label">outdoor & adapté à tous les niveaux</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ======== OFFRES ======== -->
+  <section class="offer-section" id="offres">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-label">Nos formules</span>
+        <h2>Une expérience pour chaque équipe</h2>
+      </div>
+      <div class="offer-grid">
+
+        <div class="offer-card">
+          <span class="offer-tag">Essentiel</span>
+          <h3>Tribu Session</h3>
+          <div class="offer-group">10 – 25 personnes</div>
+          <ul>
+            <li>1 activité au choix (Cycling, Yoga, Pilates ou Dance Flow)</li>
+            <li>1h30 d'expérience guidée en extérieur</li>
+            <li>Instructeur·trice certifié·e Tribu·M</li>
+            <li>Playlist live dédiée</li>
+            <li>Lieu au cœur de Bruxelles</li>
+          </ul>
+          <div class="offer-price">Sur devis<span> / groupe</span></div>
+          <a href="#contact" class="btn-secondary">Demander un devis</a>
+        </div>
+
+        <div class="offer-card featured">
+          <span class="offer-tag">Recommandé</span>
+          <h3>Tribu Experience</h3>
+          <div class="offer-group">25 – 60 personnes</div>
+          <ul>
+            <li>2 activités combinées (rotation par groupe)</li>
+            <li>2h30 d'expérience totale</li>
+            <li>Coordinateur·trice événement dédié·e</li>
+            <li>Installation sonore professionnelle</li>
+            <li>Moment convivial inclus (boissons fraîches)</li>
+            <li>Photos & vidéos souvenir</li>
+          </ul>
+          <div class="offer-price">Sur devis<span> / groupe</span></div>
+          <a href="#contact" class="btn-premium">Demander un devis</a>
+        </div>
+
+        <div class="offer-card">
+          <span class="offer-tag">Sur mesure</span>
+          <h3>Tribu Full Day</h3>
+          <div class="offer-group">60+ personnes · Journée complète</div>
+          <ul>
+            <li>Programme sur mesure (matin + après-midi)</li>
+            <li>Choix du lieu (Bruxelles ou extérieur BXL)</li>
+            <li>Toutes les activités Tribu·M disponibles</li>
+            <li>Catering partenaire optionnel</li>
+            <li>Branding événement personnalisé</li>
+            <li>Rapport d'engagement post-événement</li>
+          </ul>
+          <div class="offer-price">Sur devis<span> / journée</span></div>
+          <a href="#contact" class="btn-secondary">Demander un devis</a>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ======== HOW IT WORKS ======== -->
+  <section class="how-section">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-label">Simple & rapide</span>
+        <h2>Comment ça se passe ?</h2>
+      </div>
+      <div class="steps">
+        <div class="step">
+          <div class="step-num">1</div>
+          <h4>Contact</h4>
+          <p>Remplis le formulaire avec tes besoins — taille du groupe, date souhaitée, activité préférée.</p>
+        </div>
+        <div class="step">
+          <div class="step-num">2</div>
+          <h4>Proposition</h4>
+          <p>On te répond sous 48h avec une proposition personnalisée et un devis clair.</p>
+        </div>
+        <div class="step">
+          <div class="step-num">3</div>
+          <h4>Confirmation</h4>
+          <p>Tu valides, on s'occupe de tout : lieu, logistique, instructeurs, playlist.</p>
+        </div>
+        <div class="step">
+          <div class="step-num">4</div>
+          <h4>L'événement</h4>
+          <p>Ton équipe arrive, on prend en charge le reste. Tu profites avec eux.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ======== CONTACT ======== -->
+  <section class="contact-section" id="contact">
+    <div class="container">
+      <div class="contact-inner">
+        <div class="contact-text">
+          <span class="section-label" style="color:var(--miel)">Parlons-en</span>
+          <h2>Organisons quelque chose ensemble.</h2>
+          <p>Décris-nous ton équipe et tes envies. On revient vers toi sous 48h avec une proposition sur mesure.</p>
+          <ul>
+            <li>📧 hello@tribu-m.eu</li>
+            <li>📍 Bruxelles & environs</li>
+            <li>📅 Disponible 7j/7 pour les événements corporate</li>
+          </ul>
+        </div>
+        <div class="contact-form-box">
+          <h3>Demande de devis</h3>
+          <form onsubmit="handleContact(event)">
+            <div class="form-row">
+              <label for="c-company">Entreprise</label>
+              <input type="text" id="c-company" placeholder="Nom de votre entreprise" required>
+            </div>
+            <div class="form-row">
+              <label for="c-name">Votre nom</label>
+              <input type="text" id="c-name" placeholder="Prénom Nom" required>
+            </div>
+            <div class="form-row">
+              <label for="c-email">Email</label>
+              <input type="email" id="c-email" placeholder="vous@entreprise.com" required>
+            </div>
+            <div class="form-row">
+              <label for="c-size">Taille du groupe</label>
+              <select id="c-size">
+                <option value="">Sélectionner...</option>
+                <option>10 – 25 personnes</option>
+                <option>25 – 60 personnes</option>
+                <option>60+ personnes</option>
+              </select>
+            </div>
+            <div class="form-row">
+              <label for="c-activity">Activité souhaitée</label>
+              <select id="c-activity">
+                <option value="">Sélectionner...</option>
+                <option>Cycling</option>
+                <option>Yoga</option>
+                <option>Pilates</option>
+                <option>Dance Flow</option>
+                <option>Combiné (plusieurs activités)</option>
+                <option>Surprise — laissez-nous choisir</option>
+              </select>
+            </div>
+            <div class="form-row">
+              <label for="c-msg">Message (optionnel)</label>
+              <textarea id="c-msg" placeholder="Date souhaitée, contraintes particulières..."></textarea>
+            </div>
+            <button type="submit" class="btn-primary btn-lg" style="width:100%; text-align:center" id="contact-submit">
+              Envoyer la demande
+            </button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ======== FOOTER ======== -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <div class="footer-logo">
+            <img src="assets/masque-clean.png" alt="Tribu·M" class="footer-masque">
+            <span class="footer-name">Tribu<span>·M</span></span>
+          </div>
+          <p>Mouvement · Musique · Meet<br>Événements afterwork à Bruxelles.</p>
+        </div>
+        <div class="footer-col">
+          <h4>Navigation</h4>
+          <ul>
+            <li><a href="index.html">Accueil</a></li>
+            <li><a href="evenements.html">Événements</a></li>
+            <li><a href="team.html">L'équipe</a></li>
+            <li><a href="entreprises.html">Entreprises</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>Contact</h4>
+          <ul>
+            <li><a href="mailto:hello@tribu-m.eu">hello@tribu-m.eu</a></li>
+            <li><a href="#">Instagram</a></li>
+            <li><a href="#">Facebook</a></li>
+          </ul>
+        </div>
+        <div class="footer-newsletter">
+          <label for="nl-email-ent">Restez dans la boucle</label>
+          <form class="newsletter-form" onsubmit="handleNL(event)">
+            <input type="email" id="nl-email-ent" placeholder="ton@email.com" required>
+            <button type="submit">OK →</button>
+          </form>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p>© 2026 Tribu·M — tribu-m.eu · Bruxelles, Belgique</p>
+        <div class="footer-social">
+          <a href="#">Instagram</a><a href="#">Facebook</a><a href="#">LinkedIn</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    const navbar = document.getElementById('navbar');
+    window.addEventListener('scroll', () => { navbar.classList.toggle('scrolled', window.scrollY > 50); }, { passive: true });
+    const hamburger = document.getElementById('hamburger');
+    const mobileMenu = document.getElementById('mobile-menu');
+    hamburger.addEventListener('click', () => {
+      const isOpen = hamburger.classList.toggle('open');
+      mobileMenu.classList.toggle('open', isOpen);
+      hamburger.setAttribute('aria-expanded', isOpen);
+    });
+    document.querySelectorAll('.lang-selector').forEach(sel => {
+      sel.querySelectorAll('.lang-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+          sel.querySelectorAll('.lang-btn').forEach(b => b.classList.remove('active'));
+          btn.classList.add('active');
+        });
+      });
+    });
+    function handleNL(e) {
+      e.preventDefault();
+      const btn = e.target.querySelector('button');
+      btn.textContent = '✓'; btn.style.background = 'var(--miel)'; btn.style.color = 'var(--foret)';
+      setTimeout(() => { btn.textContent = 'OK →'; btn.style.background = ''; btn.style.color = ''; }, 3000);
+    }
+    function handleContact(e) {
+      e.preventDefault();
+      const btn = document.getElementById('contact-submit');
+      btn.textContent = '✓ Demande envoyée !';
+      btn.style.background = 'var(--miel)';
+      btn.style.color = 'var(--foret)';
+      btn.disabled = true;
+    }
+  </script>
+</body>
+</html>
