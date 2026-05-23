@@ -6,6 +6,19 @@
   <meta name="description" content="Tribu·M — Événements afterwork à Bruxelles. Cycling, Yoga, Pilates et Dance Flow au coucher du soleil. Mouvement, musique et connexion humaine.">
   <title>Tribu·M — Mouvement · Musique · Meet</title>
   <link rel="stylesheet" href="style.css">
+  <style>
+    .hero-logo-text {
+      font-family: var(--f-title);
+      font-size: clamp(2.8rem, 7vw, 5rem);
+      font-weight: 700;
+      color: var(--creme);
+      letter-spacing: 0.04em;
+      line-height: 1;
+      margin-bottom: 1.5rem;
+      text-shadow: 0 2px 24px rgba(31,56,49,0.4);
+    }
+    .hero-logo-text span { color: var(--miel); }
+  </style>
 </head>
 <body>
 
@@ -64,7 +77,7 @@
   <section class="hero" id="home">
     <div class="hero-overlay"></div>
     <div class="hero-content">
-      <img src="assets/masque-clean.png" alt="Tribu·M" class="hero-masque">
+      <div class="hero-logo-text">Tribu<span>·M</span></div>
       <h1>Connecte. Bouge.<br>Célèbre la vie.</h1>
       <p>Après le travail, retrouve le mouvement, la chaleur et la tribu.</p>
       <a href="evenements.html" class="btn-primary btn-lg">Voir les prochains événements</a>
@@ -83,8 +96,9 @@
         <div class="concept-text">
           <span class="section-label">Notre univers</span>
           <h2>La magie, c'est de bouger ensemble.</h2>
-          <p>Le monde du fitness a longtemps valorisé la performance individuelle. Chez Tribu·M, on choisit autre chose : se retrouver, bouger librement, et se connecter.</p>
-          <p>Pas de performance. Pas de posture. Juste le plaisir de bouger ensemble, portés par la musique et la chaleur du groupe.</p>
+          <p>Le monde du fitness a longtemps valorisé la performance individuelle et l'esthétique. Mais la plupart des gens n'en veulent plus, nous y compris.</p>
+          <p>Ce qu'on veut, c'est se sentir bien. Et se sentir bien passe avant tout par se retrouver — dans un cadre qui favorise des interactions authentiques et positives.</p>
+          <p>Le rassemblement. La musique. Le mouvement. Ensemble, ces trois forces créent quelque chose qu'aucun programme d'entraînement ne peut reproduire seul.</p>
           <a href="evenements.html" class="btn-secondary">Découvrir les événements</a>
         </div>
 
@@ -92,17 +106,17 @@
           <div class="pillar">
             <div class="pillar-stat">+26%</div>
             <div class="pillar-label">ocytocine</div>
-            <p>Quand on bouge ensemble, le cerveau libère l'hormone du lien social.</p>
+            <p>Quand on bouge ensemble, le cerveau libère de l'ocytocine — l'hormone du lien social. <em>(Cohen et al., 2010 ; Frontiers in Physiology, 2024)</em></p>
           </div>
           <div class="pillar">
             <div class="pillar-stat">×2</div>
             <div class="pillar-label">endorphines</div>
-            <p>Bouger en synchronie double la libération d'endorphines par rapport à l'exercice solitaire.</p>
+            <p>Bouger en synchronie avec d'autres double la libération d'endorphines par rapport à l'exercice solitaire. <em>(Dunbar et al., 2012 ; Barton &amp; Pretty, 2010)</em></p>
           </div>
           <div class="pillar">
-            <div class="pillar-stat">×2</div>
-            <div class="pillar-label">longévité</div>
-            <p>Les liens sociaux forts réduisent le risque de mort prématurée de 26%.</p>
+            <div class="pillar-stat">×3</div>
+            <div class="pillar-label">coopération · La Cohérence</div>
+            <p>Se mouvoir ensemble en rythme triple la coopération et la confiance mutuelle. À grande échelle, cette cohérence collective réduit les tensions sociales — l'effet Maharishi. <em>(Wiltermuth &amp; Heath, Stanford, 2009 ; Dillbeck et al., 1988)</em></p>
           </div>
         </div>
 
@@ -119,7 +133,7 @@
       <div class="section-header">
         <span class="section-label">Nos expériences</span>
         <h2>Un mouvement pour chaque envie</h2>
-        <p>Des événements afterwork pensés pour bouger, respirer et se retrouver — en plein air, au coucher du soleil.</p>
+        <p>Des évènements pensés pour bouger, respirer et se retrouver, en plein air.</p>
       </div>
 
       <div class="experiences-grid">
@@ -130,7 +144,7 @@
           <div class="card-content">
             <span class="card-tag">Cycling</span>
             <h3>Cycling Sunset</h3>
-            <p>L'énergie d'un groupe, le rythme de la musique, la sensation du sunset sous tes roues.</p>
+            <p>L'énergie de nos instructeurs passionnés, la puissance d'un groupe, le rythme. Une pratique qui réchauffe et renforce le cœur en musique.</p>
             <a href="evenements.html" class="card-link">Voir les dates →</a>
           </div>
         </div>
@@ -141,7 +155,7 @@
           <div class="card-content">
             <span class="card-tag">Yoga</span>
             <h3>Yoga Flow</h3>
-            <p>Respirer, s'étirer, se mouvoir avec grâce. Ensemble, ça change tout.</p>
+            <p>Yoga signifie « union ». Respirer, s'étirer, se mouvoir avec grâce ensemble. En tribu, c'est le rituel de retrouver ancrage et joie entouré de belles âmes.</p>
             <a href="evenements.html" class="card-link">Voir les dates →</a>
           </div>
         </div>
@@ -152,7 +166,7 @@
           <div class="card-content">
             <span class="card-tag">Pilates</span>
             <h3>Pilates Outdoor</h3>
-            <p>Le mouvement précis, en conscience, entouré de la présence chaleureuse de ta tribu.</p>
+            <p>Le mouvement précis et en conscience, entouré de la présence bienveillante de nos camarades.</p>
             <a href="evenements.html" class="card-link">Voir les dates →</a>
           </div>
         </div>
@@ -221,7 +235,7 @@
   <section class="section ambiance" id="ambiance">
     <div class="container">
       <span class="section-label">L'ambiance</span>
-      <h2>Des soirées qui restent</h2>
+      <h2>Des moments mémorables</h2>
     </div>
     <div class="photo-grid">
       <div class="photo-item">
