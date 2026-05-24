@@ -489,6 +489,11 @@
       submitBtn.disabled = true;
 
       try {
+        // Sur localhost le serveur Python ne route pas les fonctions Netlify
+        if (location.hostname === 'localhost' || location.hostname === '127.0.0.1') {
+          throw new Error('Les réservations fonctionnent uniquement sur le site déployé (Netlify). Pour tester en local, utilise <code>netlify dev</code>.');
+        }
+
         const res = await fetch('/.netlify/functions/create-payment', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
@@ -501,6 +506,12 @@
             price:      25,
           }),
         });
+
+        // Vérifier que la réponse est bien du JSON (pas une page d'erreur HTML)
+        const contentType = res.headers.get('content-type') || '';
+        if (!contentType.includes('application/json')) {
+          throw new Error(`Erreur serveur (${res.status}). Vérifie que le site est bien déployé sur Netlify avec les variables d'environnement configurées.`);
+        }
 
         const data = await res.json();
 
