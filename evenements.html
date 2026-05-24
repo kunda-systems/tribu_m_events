@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="Tous les événements Tribu·M à Bruxelles — Cycling, Yoga, Pilates et Dance Flow au coucher du soleil.">
+  <meta name="description" content="Tous les événements Tribu·M à Bruxelles — Cycling, Yoga et Pilates en plein air, toutes les semaines.">
   <title>Événements — Tribu·M</title>
   <link rel="stylesheet" href="style.css">
   <style>
@@ -96,7 +96,6 @@
     }
     .event-card-img .card-tag.tag-yoga   { background: var(--abricot); }
     .event-card-img .card-tag.tag-pilates { background: var(--miel); color: var(--foret); }
-    .event-card-img .card-tag.tag-dance  { background: var(--prune); }
     .event-card-spots {
       position: absolute;
       bottom: 0.75rem; right: 1rem;
@@ -214,7 +213,7 @@
     <div class="container">
       <span class="section-label">Bruxelles · Été 2026</span>
       <h1>Réserve ta place.</h1>
-      <p>Des événements afterwork en plein air — chaque semaine, au coucher du soleil.</p>
+      <p>Des événements afterworks en mouvement toutes les semaines.</p>
     </div>
   </div>
 
@@ -225,7 +224,6 @@
       <button class="filter-btn" data-filter="cycling">Cycling</button>
       <button class="filter-btn" data-filter="yoga">Yoga</button>
       <button class="filter-btn" data-filter="pilates">Pilates</button>
-      <button class="filter-btn" data-filter="dance">Dance Flow</button>
     </div>
   </div>
 
@@ -328,19 +326,6 @@
         url: 'event-pilates-laeken.html'
       },
       {
-        id: 'dance-soignes-0705',
-        type: 'dance',
-        title: 'Dance Flow',
-        location: 'Forêt de Soignes',
-        dateStr: 'Dim 5 juillet 2026',
-        time: '17h30 – 19h00',
-        price: 20,
-        spots: 25,
-        available: 20,
-        img: 'assets/yoga-bg.png',
-        url: 'event-dance-flow-soignes.html'
-      },
-      {
         id: 'cycling-cambre-0712',
         type: 'cycling',
         title: 'Cycling Sunset',
@@ -368,8 +353,8 @@
       },
     ];
 
-    const tagClass = { cycling: '', yoga: 'tag-yoga', pilates: 'tag-pilates', dance: 'tag-dance' };
-    const tagLabel = { cycling: 'Cycling', yoga: 'Yoga', pilates: 'Pilates', dance: 'Dance Flow' };
+    const tagClass = { cycling: '', yoga: 'tag-yoga', pilates: 'tag-pilates' };
+    const tagLabel = { cycling: 'Cycling', yoga: 'Yoga', pilates: 'Pilates' };
 
     function spotsLabel(av) {
       if (av === 0) return '🔴 Complet';
