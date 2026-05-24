@@ -191,9 +191,46 @@
       letter-spacing: 0.03em;
       transition: background var(--ease), transform var(--ease);
       margin-bottom: 0.75rem;
+      width: 100%;
+      border: none;
+      cursor: pointer;
     }
-    .booking-cta:hover { background: var(--miel); color: var(--foret); transform: translateY(-2px); }
+    .booking-cta:hover:not(:disabled) { background: var(--miel); color: var(--foret); transform: translateY(-2px); }
+    .booking-cta:disabled { opacity: 0.6; cursor: not-allowed; transform: none; }
     .booking-note { font-size: 0.75rem; text-align: center; opacity: 0.45; }
+
+    /* Champs du formulaire de réservation */
+    .book-field { margin-bottom: 1rem; }
+    .book-field label {
+      display: block;
+      font-size: 0.72rem;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      opacity: 0.55;
+      margin-bottom: 0.35rem;
+    }
+    .book-field input {
+      width: 100%;
+      background: var(--creme);
+      border: 1.5px solid rgba(31,56,49,.15);
+      border-radius: var(--radius);
+      padding: 0.7rem 0.9rem;
+      font-family: var(--f-body);
+      font-size: 0.92rem;
+      color: var(--foret);
+      outline: none;
+      transition: border-color var(--ease);
+      box-sizing: border-box;
+    }
+    .book-field input:focus { border-color: var(--terra); }
+    .book-field input::placeholder { opacity: 0.35; }
+    .book-error {
+      font-size: 0.8rem;
+      color: var(--terra);
+      margin-bottom: 0.75rem;
+      text-align: center;
+    }
 
     @media (max-width: 900px) {
       .event-detail-grid { grid-template-columns: 1fr; }
@@ -339,10 +376,21 @@
             </div>
           </div>
 
-          <!-- Mollie Payment Link — remplacer href par le vrai lien Mollie -->
-          <a href="#" class="booking-cta" id="mollie-btn">
-            Réserver ma place — 25 €
-          </a>
+          <!-- Formulaire de réservation → Mollie via Netlify Function -->
+          <form id="booking-form" novalidate>
+            <div class="book-field">
+              <label for="book-name">Votre nom</label>
+              <input type="text" id="book-name" name="name" placeholder="Prénom Nom" required autocomplete="name">
+            </div>
+            <div class="book-field">
+              <label for="book-email">Email</label>
+              <input type="email" id="book-email" name="email" placeholder="vous@email.com" required autocomplete="email">
+            </div>
+            <div id="book-error" class="book-error" style="display:none"></div>
+            <button type="submit" class="booking-cta" id="book-submit">
+              Réserver ma place — 25 €
+            </button>
+          </form>
           <p class="booking-note">Paiement sécurisé via Mollie · Remboursement si annulation 48h avant</p>
         </div>
 
@@ -419,6 +467,60 @@
       btn.textContent = '✓'; btn.style.background = 'var(--miel)'; btn.style.color = 'var(--foret)';
       setTimeout(() => { btn.textContent = 'OK →'; btn.style.background = ''; btn.style.color = ''; }, 3000);
     }
+
+    // ── Réservation Mollie ──────────────────────────────────────────────────
+    document.getElementById('booking-form').addEventListener('submit', async (e) => {
+      e.preventDefault();
+
+      const nameInput  = document.getElementById('book-name');
+      const emailInput = document.getElementById('book-email');
+      const submitBtn  = document.getElementById('book-submit');
+      const errorDiv   = document.getElementById('book-error');
+
+      // Validation simple
+      if (!nameInput.value.trim() || !emailInput.value.trim()) {
+        errorDiv.textContent = 'Merci de renseigner ton nom et ton email.';
+        errorDiv.style.display = 'block';
+        return;
+      }
+
+      errorDiv.style.display = 'none';
+      submitBtn.textContent = 'Chargement…';
+      submitBtn.disabled = true;
+
+      try {
+        const res = await fetch('/.netlify/functions/create-payment', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            name:       nameInput.value.trim(),
+            email:      emailInput.value.trim(),
+            eventId:    'cycling-cambre-0614',
+            eventTitle: 'Cycling Sunset — Bois de la Cambre',
+            eventDate:  'Samedi 14 juin 2026',
+            price:      25,
+          }),
+        });
+
+        const data = await res.json();
+
+        if (!data.checkoutUrl) {
+          throw new Error(data.error || 'Erreur inconnue');
+        }
+
+        // Stocker le payment ID pour la page de retour
+        localStorage.setItem('tribu_payment_id', data.paymentId);
+
+        // Rediriger vers le checkout Mollie
+        window.location.href = data.checkoutUrl;
+
+      } catch (err) {
+        submitBtn.textContent = 'Réserver ma place — 25 €';
+        submitBtn.disabled = false;
+        errorDiv.textContent = err.message || 'Une erreur est survenue. Réessaie ou écris-nous.';
+        errorDiv.style.display = 'block';
+      }
+    });
   </script>
 </body>
 </html>

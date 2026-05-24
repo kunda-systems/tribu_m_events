@@ -1,0 +1,15 @@
+[build]
+  publish = "."
+  functions = "netlify/functions"
+
+[build.environment]
+  NODE_VERSION = "18"
+
+[functions]
+  node_bundler = "esbuild"
+
+# Redirect /api/* → /.netlify/functions/* pour des URLs propres
+[[redirects]]
+  from = "/api/*"
+  to = "/.netlify/functions/:splat"
+  status = 200

@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Confirmation de réservation — Tribu·M</title>
+  <link rel="stylesheet" href="style.css">
+  <style>
+    .return-hero {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      background: var(--creme);
+    }
+    .return-box {
+      max-width: 520px;
+      margin: 0 auto;
+      text-align: center;
+      padding: 3rem 2rem;
+    }
+    .return-icon {
+      font-size: 4rem;
+      margin-bottom: 1.5rem;
+      display: block;
+      animation: popIn 0.5s ease;
+    }
+    @keyframes popIn {
+      from { transform: scale(0.5); opacity: 0; }
+      to   { transform: scale(1);   opacity: 1; }
+    }
+    .return-box h1 { font-size: 2rem; margin-bottom: 0.75rem; }
+    .return-box .subtitle { font-size: 1.05rem; opacity: 0.7; margin-bottom: 2rem; }
+
+    .return-details {
+      background: var(--sable);
+      border-radius: var(--radius-lg);
+      padding: 1.5rem 2rem;
+      text-align: left;
+      margin-bottom: 2.5rem;
+    }
+    .return-details h3 { font-size: 1rem; margin-bottom: 1rem; opacity: 0.55; text-transform: uppercase; letter-spacing: 0.08em; font-family: var(--f-body); font-weight: 700; }
+    .return-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0.5rem 0;
+      border-bottom: 1px solid rgba(31,56,49,.07);
+      font-size: 0.92rem;
+    }
+    .return-row:last-child { border-bottom: none; }
+    .return-row .label { opacity: 0.55; }
+    .return-row .value { font-weight: 700; }
+
+    /* Loading state */
+    .spinner {
+      width: 48px; height: 48px;
+      border: 4px solid rgba(31,56,49,.12);
+      border-top-color: var(--terra);
+      border-radius: 50%;
+      animation: spin 0.9s linear infinite;
+      margin: 0 auto 1.5rem;
+    }
+    @keyframes spin { to { transform: rotate(360deg); } }
+
+    /* Error state */
+    .return-error { color: var(--terra); }
+  </style>
+</head>
+<body>
+
+  <!-- ======== NAVIGATION ======== -->
+  <nav class="navbar scrolled" id="navbar">
+    <div class="nav-inner">
+      <a href="index.html" class="nav-logo">
+        <img src="assets/masque-v2.png" alt="Tribu·M" class="nav-masque">
+        <span class="nav-brand">Tribu<span class="nav-m">·M</span></span>
+      </a>
+      <ul class="nav-links">
+        <li><a href="index.html">Accueil</a></li>
+        <li><a href="evenements.html">Événements</a></li>
+        <li><a href="team.html">L'équipe</a></li>
+        <li><a href="entreprises.html">Entreprises</a></li>
+      </ul>
+      <div class="nav-right">
+        <a href="evenements.html" class="btn-primary">Réserver</a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- ======== RETURN CONTENT ======== -->
+  <div class="return-hero">
+    <div class="container">
+      <div class="return-box" id="return-box">
+        <!-- Chargement par défaut -->
+        <div class="spinner" id="spinner"></div>
+        <p style="opacity:.55">Vérification de ton paiement…</p>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const box = document.getElementById('return-box');
+
+    function showSuccess(data) {
+      box.innerHTML = `
+        <span class="return-icon">🎉</span>
+        <h1>Réservation confirmée !</h1>
+        <p class="subtitle">Tu vas recevoir un email de confirmation à <strong>${data.email}</strong>.</p>
+        <div class="return-details">
+          <h3>Récapitulatif</h3>
+          <div class="return-row">
+            <span class="label">Événement</span>
+            <span class="value">${data.eventTitle}</span>
+          </div>
+          <div class="return-row">
+            <span class="label">Date</span>
+            <span class="value">${data.eventDate}</span>
+          </div>
+          <div class="return-row">
+            <span class="label">Participant</span>
+            <span class="value">${data.name}</span>
+          </div>
+          <div class="return-row">
+            <span class="label">Montant payé</span>
+            <span class="value">${data.amount} €</span>
+          </div>
+        </div>
+        <a href="evenements.html" class="btn-secondary" style="margin-right:.75rem">Voir tous les événements</a>
+        <a href="index.html" class="btn-primary">Retour à l'accueil</a>
+      `;
+    }
+
+    function showPending() {
+      box.innerHTML = `
+        <span class="return-icon">⏳</span>
+        <h1>Paiement en cours…</h1>
+        <p class="subtitle">On vérifie la confirmation. Ça prend quelques secondes.</p>
+      `;
+      // Re-vérifier dans 3s
+      setTimeout(checkPayment, 3000);
+    }
+
+    function showError(status) {
+      const msg = status === 'canceled'
+        ? 'Tu as annulé le paiement. Tu peux réessayer quand tu veux.'
+        : status === 'expired'
+        ? 'Le délai de paiement a expiré. Retente ta réservation.'
+        : 'Le paiement n\'a pas pu aboutir. Contacte-nous si le problème persiste.';
+
+      box.innerHTML = `
+        <span class="return-icon">😕</span>
+        <h1 class="return-error">Paiement non complété</h1>
+        <p class="subtitle">${msg}</p>
+        <a href="evenements.html" class="btn-primary">Retour aux événements</a>
+        <p style="margin-top:1.5rem;font-size:.82rem;opacity:.45">Besoin d'aide ? <a href="mailto:hello@tribu-m.eu">hello@tribu-m.eu</a></p>
+      `;
+    }
+
+    let attempts = 0;
+
+    async function checkPayment() {
+      const paymentId = localStorage.getItem('tribu_payment_id');
+
+      if (!paymentId) {
+        showError('unknown');
+        return;
+      }
+
+      try {
+        const res = await fetch(`/.netlify/functions/check-payment?id=${paymentId}`);
+        const data = await res.json();
+
+        if (data.status === 'paid') {
+          localStorage.removeItem('tribu_payment_id');
+          showSuccess(data);
+        } else if ((data.status === 'open' || data.status === 'pending') && attempts < 8) {
+          attempts++;
+          showPending();
+        } else {
+          showError(data.status);
+        }
+      } catch (err) {
+        showError('error');
+      }
+    }
+
+    checkPayment();
+  </script>
+
+</body>
+</html>
